@@ -14,15 +14,30 @@ string breakAtSpot(int spot, string n) {
 }
 
 int countConsecutive(string necklace, char color) { // TODO: make this only read the first consecutive beads, then break after it isn't consecutive
+	cout << "original: " << necklace << endl;
+	
 	int count = 0;
-	replace(necklace.begin(), necklace.end(), 'w', color);
-
-	for (int i = 0; i < necklace.length() - 1; i++) {
-		if (necklace.at(i) == color && necklace.at(i + 1) == color) { // TODO: if blue, make any whites blue. if encounter red, then make subsequent whites red.
-			count++;
+	//replace(necklace.begin(), necklace.end(), 'w', color);
+	char currColor = 'r'; // i am suspecting this isn't working too good.
+	for (int i = 0; i < necklace.length(); i++) {
+		if (!(necklace.at(i) == 'w')) {
+			currColor = necklace.at(i);
+			break;
 		}
 	}
-	cout << necklace << " " << color << ": " << count << endl;
+	//cout << "Current Color: " << currColor << endl;
+	for (int i = 0; i < necklace.length() - 1; i++) {
+		if (necklace.at(i) == 'w') {
+			necklace.at(i) = currColor;
+		}
+		else if (necklace.at(i) == color && necklace.at(i + 1) == color) { // TODO: if blue, make any whites blue. if encounter red, then make subsequent whites red.
+			count++;
+		}
+		else if (!necklace.at(i) == currColor && !necklace.at(i) == 'w') { // if necklace is not the current color and not white
+			currColor = necklace.at(i);
+		}
+	}
+	cout << "new:      " << necklace << endl;
 
 	return count; // +whiteCount;
 }
