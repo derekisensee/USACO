@@ -13,33 +13,15 @@ string breakAtSpot(int spot, string n) {
 	return (n.substr(spot, n.length()) + n.substr(0, spot));
 }
 
-int countConsecutive(string necklace, char color) {
-	int count = 0; // , whiteCount = 0, whiteSpot = 0;
+int countConsecutive(string necklace, char color) { // TODO: make this only read the first consecutive beads, then break after it isn't consecutive
+	int count = 0;
 	replace(necklace.begin(), necklace.end(), 'w', color);
 
 	for (int i = 0; i < necklace.length() - 1; i++) {
-		if ((necklace.at(i) == color && necklace.at(i + 1) == color)) {
+		if (necklace.at(i) == color && necklace.at(i + 1) == color) { // TODO: if blue, make any whites blue. if encounter red, then make subsequent whites red.
 			count++;
 		}
-		/*if (i + 1 != necklace.length() && necklace.at(i) == color && necklace.at(i + 1) == 'w') {
-			whiteCount = 0;
-			whiteCount++;
-			bool trueWhile = true;
-			whiteSpot = i;
-
-			while (trueWhile) {
-				if (whiteSpot != necklace.length() - 1 && necklace.at(whiteSpot + 1) == 'w') {
-					whiteCount++;
-					whiteSpot++;
-				}
-				else {
-					trueWhile = false;
-				}
-			}
-		}
-		whiteSpot = 0;*/
 	}
-	//cout << necklace << "\n" << "count: " << count << " white count: " << whiteCount << endl;
 	cout << necklace << " " << color << ": " << count << endl;
 
 	return count; // +whiteCount;
@@ -54,7 +36,7 @@ int main() {
 	in >> size >> necklace;
 
 	int redMax = 0, blueMax = 0;
-
+	
 	for (int currentBreak = 0; currentBreak < necklace.length(); currentBreak++) {
 		int redCount = countConsecutive(breakAtSpot(currentBreak, necklace), 'r');
 		int blueCount = countConsecutive(breakAtSpot(currentBreak, necklace), 'b');
